@@ -32,8 +32,8 @@ flow = as.data.frame(flow)
 flow = od2line(flow, lsoa_cents)
 st_crs(flow) = 27700
 flow$length = as.numeric(st_length(flow))
-#flow$length_km <- round(flow$length / 1000)
-flow$length_km <- round((flow$length / 1000)/5)*5
+flow$length_km <- round(flow$length / 1000)
+#flow$length_km <- round((flow$length / 1000)/5)*5
 
 saveRDS(flow,"data_secure/LSOA_flow.Rds")
 
@@ -105,3 +105,14 @@ ggplot(overall_mode, aes(length_km,value, col=variable)) +
   xlim(20,500)+
   ylim(0,1.2) +
   ggsave("plots/distance_deacy_lsoa_20km-500km.jpg")
+
+ggplot(overall_mode, aes(length_km,value, col=variable)) + 
+  geom_line(size = 1.5) +
+  scale_color_brewer(palette="Spectral") +
+  xlab("Straight line distance in km") +
+  ylab("Percentage of all trips by mode") +
+  ggtitle("Distance decay curve by mode, under 20 km") +
+  xlim(0,20)+
+  #ylim(0,1.2) +
+  ggsave("plots/distance_deacy_lsoa_under20km.jpg")
+
